@@ -10,7 +10,7 @@ export const ProductInterface = ({
   productsInfo,
   filteredProducts,
 }) => {
-  const [productById, setProductByID] = useState([]);
+  const [carByID, setCarByID] = useState([]);
 
   return (
     <>
@@ -18,27 +18,27 @@ export const ProductInterface = ({
         <InsideContainer>
           <h2>Lista de Produtos</h2>
           {filteredProducts.length > 0
-            ? filteredProducts.map((product) => (
+            ? filteredProducts.map((car) => (
                 <Cards
-                  product={product}
-                  key={product.id}
-                  setProductByID={setProductByID}
+                  car={car}
+                  key={car.id}
+                  setCarByID={setCarByID}
                 />
               ))
             : productsInfo.map((car) => (
                 <Cards
                   car={car}
                   key={car.id}
-                  setProductByID={setProductByID}
+                  setCarByID={setCarByID}
                 />
               ))}
         </InsideContainer>
         <InsideContainer>
           <h2>Detalhes</h2>
-          {productById.length === 0 ? (
+          {carByID.length === 0 ? (
             <DetailFieldEmpty />
           ) : (
-            <DetailField productById={productById} />
+            <DetailField carByID={carByID} />
           )}
         </InsideContainer>
       </Container>

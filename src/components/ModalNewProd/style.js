@@ -81,6 +81,19 @@ export const ModalOptions = styled.div`
   height: 20rem;
   overflow: scroll;
   overflow-x: hidden;
+  ::-webkit-scrollbar {
+    width: 0.8rem;
+    height: 0.5rem;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--dark-green);
+    border-radius: 0.5rem;
+  }
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-gray);
+  }
   .spanField {
     width: 100%;
     height: 5rem;

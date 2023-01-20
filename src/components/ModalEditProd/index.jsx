@@ -1,46 +1,58 @@
 import {
   BackgroundModal,
   ButtonStyled,
+  ContainerProdData,
   ModalContainer,
   ModalHeader,
-  ModalOptions
-} from "./style";
+  ModalOptions,
+} from "../ModalNewProd/style";
 
-
-
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { api } from "../../services";
 
 export const ModalEditProd = ({ setModalEditProd, productId }) => {
   const formSchema = yup.object().shape({
-    produto: yup.string().required("Campo obrigatório"),
-    valor: yup.string().required("Campo obrigatório"),
-    descricao: yup.string().required("Campo obrigatório"),
+    name: yup.string(),
+    brand: yup.string().max(15, "Max 15 characters"),
+    description: yup.string().max(150, "Max 150 characters"),
+    owner: yup.object().shape({
+      email: yup.string().email("Deve ser um email válido"),
+      name: yup.string(),
+      cellphone: yup.string(),
+    }),
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(formSchema),
-  });
+  } = useForm({ resolver: yupResolver(formSchema) });
 
-  const onSubmits = ({ produto, descricao, valor }) => {
-    const product = { produto, descricao, valor };
+  const onSubmits = (data) => {
+    const product = {
+      name: data.name,
+      brand: data.brand,
+      price: data.price,
+      description: data.description,
+      owner: {
+        name: data.owner?.name,
+        email: data.owner?.email,
+        cellphone: data.owner?.cellphone,
+      },
+    };
+    console.log(product);
     api
-      .patch(
-        `/cars/${productId}`,
-        product
-      )
+      .patch(`/cars/${productId}`, product)
       .then((_) => {
-        console.log(_);
+        console.log(product);
         setModalEditProd(false);
+        window.location.reload();
       })
-      .catch((err) => console.log("Ops! Algo deu errado"));
+      .catch((err) => console.log(err.response.data.message));
   };
+
   return (
     <BackgroundModal>
       <ModalContainer>
@@ -53,23 +65,54 @@ export const ModalEditProd = ({ setModalEditProd, productId }) => {
         <ModalOptions>
           <form id="form" onSubmit={handleSubmit(onSubmits)}>
             <div className="productField">
-              <input placeholder="Produto" {...register("produto")} />
-              <input placeholder="Valor R$" {...register("valor")} />
+              <h1>Dados do Produto</h1>
+              <ContainerProdData>
+                <input placeholder="Modelo do veículo" {...register("name")} />
+                {errors.name && <span>{errors.name?.message}</span>}
+
+                <input placeholder="Marca" {...register("brand")} />
+                {errors.brand && <span>{errors.brand?.message}</span>}
+
+                <input placeholder="Valor R$" {...register("price")} />
+                {errors.price && <span>{errors.price?.message}</span>}
+              </ContainerProdData>
             </div>
             <div className="moreInfoField">
-              <input placeholder="Descricao" {...register("descricao")} />
+              <input placeholder="Descrição" {...register("description")} />
             </div>
-            <div className="spanField">
-              {errors.produto && <span>Produto é um campo de texto obrigatório</span>}
-              {errors.valor && <span>Valor é um campo numérico obrigatório</span>}
-              {errors.descricao && (
-                <span>Descrição é um campo de texto obrigatório</span>
-              )}
+            <div className="productField">
+              <h1>Dados do Proprietário</h1>
+              <ContainerProdData>
+                <input
+                  placeholder="Nome completo"
+                  {...register("owner.name")}
+                />
+                {errors.owner?.name && (
+                  <span>{errors.owner?.name?.message}</span>
+                )}
+
+                <input
+                  placeholder="email@mail.com"
+                  {...register("owner.email")}
+                />
+                {errors.owner?.email && (
+                  <span>{errors.owner?.email?.message}</span>
+                )}
+
+                <input
+                  placeholder="Tel (XX)9XXXX-XXXX"
+                  {...register("owner.cellphone")}
+                />
+                {errors.owner?.cellphone && (
+                  <span>{errors.owner?.cellphone?.message}</span>
+                )}
+              </ContainerProdData>
             </div>
+            <div className="spanField"></div>
           </form>
         </ModalOptions>
         <ButtonStyled form="form" type="submit">
-          EDIT
+          Edit
         </ButtonStyled>
       </ModalContainer>
     </BackgroundModal>

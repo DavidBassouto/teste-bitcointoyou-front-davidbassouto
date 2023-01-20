@@ -3,21 +3,18 @@ import {
   ButtonsContainer,
   ButtonStyled,
   ModalContainer,
-  ModalHeader
+  ModalHeader,
 } from "./style";
-
 
 import { api } from "../../services";
 
 export const ModalDeleteProd = ({ setModalDelete, productId }) => {
-
   const deleteProductById = (id) => {
     api
-      .delete(
-        `/cars/${id}`
-      )
+      .delete(`/cars/${id}`)
       .then((_) => {
         setModalDelete(false);
+        window.location.reload();
       })
       .catch((err) => console.log("Ops! Algo deu errado"));
   };
@@ -32,13 +29,20 @@ export const ModalDeleteProd = ({ setModalDelete, productId }) => {
           </div>
         </ModalHeader>
         <ButtonsContainer>
-        <ButtonStyled form="form" type="button" onClick={()=>deleteProductById(productId)}>
-          REMOVE
-        </ButtonStyled>
-        <ButtonStyled form="form" type="button" onClick={()=>setModalDelete(false)}>
-          CANCEL
-        </ButtonStyled>
-
+          <ButtonStyled
+            form="form"
+            type="button"
+            onClick={() => deleteProductById(productId)}
+          >
+            REMOVE
+          </ButtonStyled>
+          <ButtonStyled
+            form="form"
+            type="button"
+            onClick={() => setModalDelete(false)}
+          >
+            CANCEL
+          </ButtonStyled>
         </ButtonsContainer>
       </ModalContainer>
     </BackgroundModal>

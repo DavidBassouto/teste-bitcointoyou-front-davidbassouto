@@ -19,7 +19,9 @@ export default createGlobalStyle`
 
     body{
         background: var(--soft-gray);
-        color: var(--dark-gray)
+        color: var(--dark-gray);
+        overflow-x: hidden;
+        
     }
 
     body, input , button {

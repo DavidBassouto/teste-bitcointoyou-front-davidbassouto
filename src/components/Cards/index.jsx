@@ -2,9 +2,9 @@ import { Tag } from "phosphor-react";
 import { api } from "../../services";
 import { Container, InformationField, TagField } from "./style";
 
-export const Cards = ({ car, setProductByID }) => {
+export const Cards = ({ car, setCarByID }) => {
   const getProductByID = (id) => {
-    api.get(`/cars/${id}`).then((res) => setProductByID(res.data));
+    api.get(`/cars/${id}`).then((res) => setCarByID(res.data));
   };
 
   return (
@@ -12,7 +12,9 @@ export const Cards = ({ car, setProductByID }) => {
       <InformationField>
         <h5>{car.name}</h5>
         <div>
-          <p>{car.owner.name.charAt(0).toUpperCase() + car.owner.name.slice(1)}</p>
+          <p>
+            {car.owner.name.charAt(0).toUpperCase() + car.owner.name.slice(1)}
+          </p>
           <p>{car.owner.email}</p>
           <p>{car.owner.cellphone}</p>
         </div>

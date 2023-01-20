@@ -30,6 +30,21 @@ export const PriceField = styled.div`
     color: var(--gray);
   }
 `;
+export const OwnerInfoField = styled.div`
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0.5rem;
+  gap: 0.2rem;
+  p {
+    font-weight: bold;
+    color: var(--green);
+  }
+  span{
+    font-size: 0.7rem;
+  }
+`;
 export const DescriptionField = styled.div`
   display: flex;
   align-items: flex-start;
