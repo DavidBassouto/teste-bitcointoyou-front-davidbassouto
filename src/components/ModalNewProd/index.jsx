@@ -24,6 +24,11 @@ export const ModalNewProd = ({ setModalNewProd }) => {
       .typeError("Deve ser um valor numério")
       .required("Campo obrigatório")
       .min(0, "Deve ser positivo"),
+    year: yup
+      .number()
+      .typeError("Deve ser um valor numério")
+      .required("Campo obrigatório")
+      .min(0, "Deve ser positivo"),
     description: yup.string().max(150, "Max 150 characters"),
     owner: yup
       .object()
@@ -49,6 +54,7 @@ export const ModalNewProd = ({ setModalNewProd }) => {
       name: data.name,
       brand: data.brand,
       price: data.price,
+      year: data.year,
       description: data.description,
       owner: {
         name: data.owner?.name,
@@ -56,15 +62,14 @@ export const ModalNewProd = ({ setModalNewProd }) => {
         cellphone: data.owner?.cellphone,
       },
     };
-    console.log(product);
+
     api
       .post(`/cars`, product)
       .then((_) => {
-        console.log(product);
         setModalNewProd(false);
         window.location.reload();
       })
-      .catch((err) => console.log(err.response.data.message));
+      .catch((err) => window.alert(err.response.data.message));
   };
 
   return (
@@ -86,6 +91,9 @@ export const ModalNewProd = ({ setModalNewProd }) => {
 
                 <input placeholder="Marca" {...register("brand")} />
                 {errors.brand && <span>{errors.brand?.message}</span>}
+
+                <input placeholder="Ano " {...register("year")} />
+                {errors.year && <span>{errors.year?.message}</span>}
 
                 <input placeholder="Valor R$" {...register("price")} />
                 {errors.price && <span>{errors.price?.message}</span>}

@@ -6,10 +6,7 @@ import { useState } from "react";
 
 import { DetailFieldEmpty } from "../DetailFieldEmpty";
 
-export const ProductInterface = ({
-  productsInfo,
-  filteredProducts,
-}) => {
+export const ProductInterface = ({ productsInfo, filteredProducts }) => {
   const [carByID, setCarByID] = useState([]);
 
   return (
@@ -19,18 +16,10 @@ export const ProductInterface = ({
           <h2>Lista de Produtos</h2>
           {filteredProducts.length > 0
             ? filteredProducts.map((car) => (
-                <Cards
-                  car={car}
-                  key={car.id}
-                  setCarByID={setCarByID}
-                />
+                <Cards car={car} key={car.id} setCarByID={setCarByID} />
               ))
             : productsInfo.map((car) => (
-                <Cards
-                  car={car}
-                  key={car.id}
-                  setCarByID={setCarByID}
-                />
+                <Cards car={car} key={car.id} setCarByID={setCarByID} />
               ))}
         </InsideContainer>
         <InsideContainer>

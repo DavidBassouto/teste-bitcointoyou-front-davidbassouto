@@ -35,6 +35,7 @@ export const ModalEditProd = ({ setModalEditProd, productId }) => {
       name: data.name,
       brand: data.brand,
       price: data.price,
+      year: data.year,
       description: data.description,
       owner: {
         name: data.owner?.name,
@@ -42,15 +43,13 @@ export const ModalEditProd = ({ setModalEditProd, productId }) => {
         cellphone: data.owner?.cellphone,
       },
     };
-    console.log(product);
     api
       .patch(`/cars/${productId}`, product)
       .then((_) => {
-        console.log(product);
         setModalEditProd(false);
         window.location.reload();
       })
-      .catch((err) => console.log(err.response.data.message));
+      .catch((err) => window.alert(err.response.data.message));
   };
 
   return (
@@ -72,6 +71,9 @@ export const ModalEditProd = ({ setModalEditProd, productId }) => {
 
                 <input placeholder="Marca" {...register("brand")} />
                 {errors.brand && <span>{errors.brand?.message}</span>}
+
+                <input placeholder="Ano " {...register("year")} />
+                {errors.year && <span>{errors.year?.message}</span>}
 
                 <input placeholder="Valor R$" {...register("price")} />
                 {errors.price && <span>{errors.price?.message}</span>}

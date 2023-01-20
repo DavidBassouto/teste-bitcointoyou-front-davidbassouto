@@ -11,6 +11,7 @@ export const Cards = ({ car, setCarByID }) => {
     <Container id={car.id} onClick={(e) => getProductByID(e.currentTarget.id)}>
       <InformationField>
         <h5>{car.name}</h5>
+        <h4>{car.year}</h4>
         <div>
           <p>
             {car.owner.name.charAt(0).toUpperCase() + car.owner.name.slice(1)}

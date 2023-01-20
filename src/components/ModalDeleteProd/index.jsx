@@ -16,7 +16,7 @@ export const ModalDeleteProd = ({ setModalDelete, productId }) => {
         setModalDelete(false);
         window.location.reload();
       })
-      .catch((err) => console.log("Ops! Algo deu errado"));
+      .catch((err) => window.alert("Ops! Algo deu errado"));
   };
 
   return (

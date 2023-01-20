@@ -18,7 +18,7 @@ export const DetailField = ({ carByID }) => {
   return (
     <>
       <Container>
-        <h3>{carByID.name}</h3>
+        <h3>{`${carByID.name} - ${carByID.year}`}</h3>
         <PriceField>
           <h4>Valor</h4>
           <p>{`R$ ${carByID.price.toFixed(2)}`}</p>
